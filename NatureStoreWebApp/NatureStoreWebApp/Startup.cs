@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using NatureStoreWebApp.Model;
+using NatureStoreWebApp.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 namespace NatureStoreWebApp
 {
@@ -27,6 +29,18 @@ namespace NatureStoreWebApp
               opt.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
             services.AddControllers();
             services.AddCors();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            //el a pus AddDefaultIdentity
+            services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<ProductContext>();
+            services.Configure<IdentityOptions>(options => 
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 4;
+            }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +65,8 @@ namespace NatureStoreWebApp
             {
                 endpoints.MapControllers();
             });
+
+            app.UseAuthentication();
         }
     }
 }

@@ -13,7 +13,8 @@ namespace NatureStoreWebApp.Model
         public int Id_product { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
+        //[Column(TypeName = "nvarchar(100)")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Name { get; set; }
 
         [Required]
@@ -23,14 +24,17 @@ namespace NatureStoreWebApp.Model
         public int Stock { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(1000)")]
+        //[Column(TypeName = "nvarchar(1000)")]
+        [StringLength(200, MinimumLength = 3)]
         public string Description { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(1000)")]
+        //[Column(TypeName = "nvarchar(1000)")]
         public string Administration { get; set; }
         public List<ProductIngredient> ProductIngredient { get; set; }
         public List<ProductDisease> ProductDisease { get; set; }
+
+        //[DataType(DataType.Date)]
 
         public Product()
         {
@@ -47,5 +51,37 @@ namespace NatureStoreWebApp.Model
             Description = description;
             Administration = administration;
         }
+
+        public Product(string name, float price, int stock, string description, string administration)
+        {
+            Name = name;
+            Price = price;
+            Stock = stock;
+            Description = description;
+            Administration = administration;
+        }
+
+        /*
+         *    { 
+       "product": {
+        "name": "Pills",
+        "price": 29.99,
+        "stock": 10,
+        "description": "Very good for cold",
+        "administration": "Two pills each morning",
+        "productIngredient": null,
+        "productDisease": null
+        },
+    	 "diseases":[{
+        	 "id_disease": 1,
+        	 "name": "Headache"
+    	  }]
+        ,
+        "ingredients":[{
+        	 "id_ingredient": 1,
+        	 "name": "Mint"
+    	  }]
+   }
+         */
     }
 }

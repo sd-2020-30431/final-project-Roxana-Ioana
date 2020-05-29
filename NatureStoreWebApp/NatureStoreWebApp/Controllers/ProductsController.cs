@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NatureStoreWebApp.Dto;
 using NatureStoreWebApp.Model;
+using NatureStoreWebApp.Repositories;
 
 namespace NatureStoreWebApp.Controllers
 {
@@ -14,73 +15,61 @@ namespace NatureStoreWebApp.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly ProductContext _context;
+        private readonly IProductRepository _productRepository;
 
-        public ProductsController(ProductContext context)
+        public ProductsController(IProductRepository productRepository)
         {
-            _context = context;
+            _productRepository = productRepository;
         }
 
         // GET: api/Product
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public ActionResult<IEnumerable<Product>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return new JsonResult(_productRepository.SelectAll());         //ToListAsync();
         }
 
         // GET: api/Product/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        /*ASP.NET Core automatically serializes the object to JSON and writes the JSON into the body of the response message.*/
+        public ActionResult<Product> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product =  _productRepository.SelectById(id);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return new JsonResult(product);
         }
 
         // PUT: api/Product/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public ActionResult<bool> PutProduct(int id, Product product)
         {
-            if (id != product.Id_product)
+            bool succedded = _productRepository.Update(id, product);
+            if(succedded)
             {
-                return BadRequest();
+                return Ok();
             }
-
-            _context.Entry(product).State = EntityState.Modified;
-
-            try
+            else
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/Product
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<IActionResult> PostProduct(ProductDto productDto)
+        public ActionResult PostProduct(ProductDto productDto)
         {
-            Product p = productDto.Product;
+            Product p = new Product(productDto.Name, productDto.Price, productDto.Stock, productDto.Description, productDto.Administration);
             
             List<Disease> diseases = productDto.Diseases;
             List<Ingredient> ingredients = productDto.Ingredients;
@@ -90,7 +79,6 @@ namespace NatureStoreWebApp.Controllers
             foreach (Disease d in diseases)
             {
                  p.ProductDisease.Add(new ProductDisease(p.Id_product, d.Id_disease));
-
             }
 
             foreach(Ingredient i in ingredients)
@@ -99,31 +87,25 @@ namespace NatureStoreWebApp.Controllers
 
             }
 
-            _context.Products.Add(p);
-            await _context.SaveChangesAsync();
+            _productRepository.Save(p);
 
             return Ok();
         }
 
         // DELETE: api/Product/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        public ActionResult<bool> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            bool succedded = _productRepository.Delete(id);
+
+            if (succedded)
+            {
+                return Ok();
+            }
+            else
             {
                 return NotFound();
             }
-
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-
-            return product;
-        }
-
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.Id_product == id);
         }
     }
 }

@@ -10,7 +10,12 @@ namespace NatureStoreWebApp.Dto
 {
     public class ProductDto
     {
-        public Product Product { get; set; }
+        public int Id_product { get; set; }
+        public string Name { get; set; }
+        public float Price { get; set; }
+        public int Stock { get; set; }
+        public string Description { get; set; }
+        public string Administration { get; set; }
         public List<Disease> Diseases { get; set; }
         public List<Ingredient> Ingredients { get; set; }
 
@@ -18,9 +23,14 @@ namespace NatureStoreWebApp.Dto
         {
         }
 
-        public ProductDto(Product product, List<Disease> diseases, List<Ingredient> ingredients)
+        public ProductDto(int id_product, string name, float price, int stock, string description, string administration, List<Disease> diseases, List<Ingredient> ingredients)
         {
-            Product = product;
+            Id_product = id_product;
+            Name = name;
+            Price = price;
+            Stock = stock;
+            Description = description;
+            Administration = administration;
             Diseases = diseases;
             Ingredients = ingredients;
         }

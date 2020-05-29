@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NatureStoreWebApp.Model
 {
-    public class ProductContext: DbContext
+    public class ProductContext: IdentityDbContext
     {
         public ProductContext(DbContextOptions<ProductContext> options)
             : base(options)
@@ -15,6 +16,8 @@ namespace NatureStoreWebApp.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<ProductIngredient>()
                 .HasKey(t => new { t.Id_product, t.Id_ingredient });
 
@@ -42,8 +45,10 @@ namespace NatureStoreWebApp.Model
                 .HasForeignKey(pt => pt.Id_disease);
         }
 
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Disease> Diseases { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
