@@ -1,13 +1,5 @@
-<div class="row mt-4">
-    <div class="col-md-6">
-      <div class="row" style="height: 450px;">
-        <div class="col-md-12 my-auto side-header">
-          <h1>User Registration</h1>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <form [formGroup]="service.formModel" autocomplete="off" (submit)="onSubmit()">
+<img src="/assets/add_user.png" class="mx-auto d-block">
+    <form [formGroup]="service.formModel" autocomplete="off" (submit)="onSubmit()">
         <div class="form-group required">
           <label>Username</label>
           <input class="form-control" formControlName="UserName">
@@ -42,5 +34,4 @@
           </div>
         </div>
       </form>
-    </div>
-  </div>
+

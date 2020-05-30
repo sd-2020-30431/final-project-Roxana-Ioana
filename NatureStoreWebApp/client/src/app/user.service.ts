@@ -8,7 +8,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 })
 export class UserService {
 
-  private baseUrl = 'https://localhost:44399/api/ApplicationUser/Register';
+  private baseUrl = 'https://localhost:44399/api/';
   
   formModel = this.fb.group({
       UserName:['', Validators.required],
@@ -46,6 +46,14 @@ export class UserService {
       Password: this.formModel.value.Passwords.Password
     };
 
-    return this.http.post(`${this.baseUrl}`, body);
+    return this.http.post(`${this.baseUrl+'ApplicationUser/Register'}`, body);
+  }
+
+  login(formData: any) {
+    return this.http.post(this.baseUrl + 'ApplicationUser/Login', formData);
+  }
+
+  getUserProfile() {
+    return this.http.get(this.baseUrl + 'UserProfile');
   }
 }
