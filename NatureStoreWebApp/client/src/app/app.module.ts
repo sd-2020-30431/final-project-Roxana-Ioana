@@ -9,11 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { UserService } from './user.service';
+import { UserService } from './shared/user.service';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { CommandComponent } from './command/command.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     UserComponent,
     RegistrationComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    CommandComponent
   ],
   imports: [
     BrowserModule,

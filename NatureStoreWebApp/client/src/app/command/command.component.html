@@ -1,0 +1,44 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand text-white"></a>
+    <button class="btn btn-light my-2 my-sm-0" (click)="onBack()">Back</button>
+    <button class="btn btn-info my-2 my-sm-0" (click)="onSendCommand()">Send Command</button>
+</nav>
+
+<div class="card bg-dark text-white">
+    <img class="card-img" src="/assets/img.jpg" alt="Card image">
+    <div class="card-img-overlay">
+      <h5 class="card-title">Choose your favourite products</h5>
+    </div>
+  </div>
+
+<br>
+<br>
+
+<div class="list-group">
+  <li *ngFor="let disease of diseases" (click)="onSelectDisease(disease)">
+    
+    <a class="list-group-item list-group-item-action active">
+        {{disease.name}}
+    </a>   
+
+  </li>
+</div>
+
+<div class="serv">
+    <ul>
+    <li *ngFor="let product of products">
+    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+    <div class="card-header">{{product.name}}</div>
+    <div class="card-body">
+      <h5 class="card-title">{{product.price}} lei</h5>
+      <p class="card-text">{{product.description}}</p>
+      <button class="btn btn-light my-2 my-sm-0" (click)="onSelectProduct(product)">Add to cart</button>
+    </div>
+  </div>
+  </li>
+</ul>
+</div>
+
+
+
+

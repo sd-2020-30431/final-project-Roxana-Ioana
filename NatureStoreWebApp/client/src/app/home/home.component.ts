@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
-import { User } from '../user';
+import { UserService } from '../shared/user.service';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-home',
@@ -28,5 +28,13 @@ export class HomeComponent implements OnInit {
   {
     localStorage.removeItem('token');
     this.router.navigate(['/user/login']);
+  }
+
+  onAdminLogin(){
+    this.router.navigate(['/products']);
+  }
+
+  onStartCommand(){
+    this.router.navigate(['/command', this.userDetails.id]);
   }
 }

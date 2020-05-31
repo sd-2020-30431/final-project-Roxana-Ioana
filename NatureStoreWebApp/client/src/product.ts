@@ -1,4 +1,4 @@
-import { Disease } from './app/disease';
+import { Disease } from './app/model/disease';
 import { Ingredient } from './app/product/ingredient';
 
 export class Product{

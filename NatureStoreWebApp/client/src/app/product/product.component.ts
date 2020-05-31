@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ProductService } from '../product.service';
+import { ProductService } from '../shared/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from 'src/product';
 import { Observable } from 'rxjs';
-import { DiseaseService } from '../disease.service';
-import { Disease } from '../disease';
+import { DiseaseService } from '../shared/disease.service';
+import { Disease } from '../model/disease';
 import { Ingredient } from './ingredient';
-import { IngredientService } from '../ingredient.service';
+import { IngredientService } from '../shared/ingredient.service';
 
 @Component({
   selector: 'app-product',

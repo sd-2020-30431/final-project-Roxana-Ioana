@@ -7,7 +7,7 @@ body{
 input.form-control,input.form-control:focus{
     background-color: #A3D5FF;
     color: #fff;
-    border: 1px solid #636b7b;
+    border: 1px solid #6A6B83;
 
 }
 
@@ -94,3 +94,35 @@ div.form-group.required>label:first-child:after{
     text-transform: uppercase;
     font-size: 0.9rem;
  }
+
+ .list-group-item.list-group-item-action{
+    margin: 0px 16px;
+    color: aliceblue;
+    width: 20%;
+    padding-top: 5px;
+    background-color: #6A6B83;
+    border-color: #6A6B83;
+ }
+
+ .card img {
+    width: 100%;
+    height: auto;
+}
+
+li, ul {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.serv ul li {
+    list-style: none;
+    flex: 0 0 20.333333%;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+
+.serv ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+  }
